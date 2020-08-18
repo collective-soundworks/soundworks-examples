@@ -4,6 +4,7 @@ import { Client } from '@soundworks/core/client';
 import initQoS from '@soundworks/template-helpers/client/init-qos.js';
 
 import pluginPlatformFactory from '@soundworks/plugin-platform/client';
+import devicemotion from '@ircam/devicemotion';
 
 import PlayerExperience from './PlayerExperience.js';
 
@@ -12,8 +13,14 @@ const config = window.soundworksConfig;
 const experiences = new Set();
 
 const client = new Client();
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioContext = new AudioContext();
+
+pluginPlatformFactory.addFeatureDefinition({
+  id: 'devicemotion',
+  initialize: async () => {
+    const result = await devicemotion.requestPermission();
+    return (result === 'granted' ? true : false);
+  },
+});
 
 async function launch($container, index) {
   try {
@@ -24,7 +31,7 @@ async function launch($container, index) {
     // -------------------------------------------------------------------
     client.pluginManager.register('platform', pluginPlatformFactory, {
       features: [
-        ['web-audio', audioContext],
+        ['devicemotion'],
       ]
     }, []);
 
@@ -34,7 +41,7 @@ async function launch($container, index) {
     await client.init(config);
     initQoS(client);
 
-    const experience = new PlayerExperience(client, config, $container, audioContext);
+    const experience = new PlayerExperience(client, config, $container, devicemotion);
     // store exprience for emulated clients
     experiences.add(experience);
 
