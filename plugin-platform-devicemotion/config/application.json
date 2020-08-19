@@ -1,19 +1,12 @@
 {
-  "name": "soundworks",
-  "author": "",
+  "name": "plugin platform w/ devicemotion example",
+  "author": "(this example require valid https certificates to work on iOS >= 13)",
 
   "clients": {
     "player": {
       "target": "browser",
       "default": true
     },
-    "controller": {
-      "target": "browser",
-      // "default": true
-    },
-    "thing": {
-      "target": "node",
-    }
   },
 
   "htmlTemplateDirectory": ".build/server/tmpl",

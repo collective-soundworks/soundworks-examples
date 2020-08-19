@@ -1,5 +1,5 @@
 {
-  "name": "plugin-platform example",
+  "name": "plugin-logger example",
   "author": "",
 
   "clients": {
@@ -8,6 +8,4 @@
       "default": true
     },
   },
-
-  "htmlTemplateDirectory": ".build/server/tmpl",
 }
