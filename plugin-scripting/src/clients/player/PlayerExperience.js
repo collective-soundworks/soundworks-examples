@@ -39,7 +39,7 @@ class PlayerExperience extends AbstractExperience {
     });
 
     // track script list updates
-    this.scripting.subscribe(() => this.render());
+    this.scripting.observe(() => this.render());
 
     window.addEventListener('resize', () => this.render());
     this.render();

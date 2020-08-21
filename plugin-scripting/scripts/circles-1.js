@@ -10,7 +10,7 @@ function circles1(ctx, width, height) {
 
     const x = Math.random() * width;
     const y = Math.random() * height;
-    const radius = 2 + Math.random() * 7;
+    const radius = 2 + Math.random() * 12;
 
     ctx.fillStyle = color;
     ctx.globalAlpha = opacity;
