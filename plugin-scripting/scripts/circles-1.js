@@ -1,6 +1,6 @@
 function circles1(ctx, width, height) {
   ctx.clearRect(0, 0, width, height);
-  
+
   for (let i = 0; i < 5000; i++) {
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
