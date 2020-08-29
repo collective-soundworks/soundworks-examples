@@ -1,6 +1,6 @@
 function circles2(ctx, width, height) {
   ctx.clearRect(0, 0, width, height);
-
+  
   const w = width / 100;
   const h = height / 100;
 

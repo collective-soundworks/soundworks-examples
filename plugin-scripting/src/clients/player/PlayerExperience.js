@@ -98,7 +98,7 @@ function draw(ctx, width, height) {
       if (updates.error) {
         const error = updates.error;
         console.log(error);
-        console.error(`[script:${this.currentScript.name}] ${error.name}: ${error.message}\n\n${error.code}`);
+        // you may display errors on the screen
       } else {
         this.currentScript.execute(ctx, width, height);
         this.render();
@@ -154,6 +154,11 @@ function draw(ctx, width, height) {
           `;
         })}
 
+        <sc-text
+          readonly
+          width="500"
+          value="open the console to see possible syntax errors when editing"
+        ></sc-text>
         <sc-editor
           style="display:block"
           width="500"
