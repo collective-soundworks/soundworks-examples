@@ -94,9 +94,15 @@ function draw(ctx, width, height) {
     const height = this.$canvas.height;
 
     // subscribe to update and re-execete the script
-    this.currentScript.subscribe(() => {
-      this.currentScript.execute(ctx, width, height);
-      this.render();
+    this.currentScript.subscribe(updates => {
+      if (updates.error) {
+        const error = updates.error;
+        console.log(error);
+        console.error(`[script:${this.currentScript.name}] ${error.name}: ${error.message}\n\n${error.code}`);
+      } else {
+        this.currentScript.execute(ctx, width, height);
+        this.render();
+      }
     });
 
     this.currentScript.onDetach(() => {
