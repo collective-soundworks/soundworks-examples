@@ -12,7 +12,7 @@
 
 ```sh
 git clone https://github.com/collective-soundworks/soundworks-examples.git
-cd plugin-platform
+cd plugin-platform-devicemotion
 npm install
 npm run dev
 ```

@@ -8,7 +8,7 @@
 
 ```sh
 git clone https://github.com/collective-soundworks/soundworks-examples.git
-cd plugin-sync
+cd plugin-sync-audio
 npm install
 npm run dev
 ```
