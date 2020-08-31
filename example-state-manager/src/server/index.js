@@ -28,18 +28,6 @@ console.log(`
 --------------------------------------------------------
 `);
 
-// -------------------------------------------------------------------
-// register services
-// -------------------------------------------------------------------
-// server.pluginHandler.register(pluginName, pluginFactory, [pluginOptions], [dependencies])
-
-// -------------------------------------------------------------------
-// register schemas
-// -------------------------------------------------------------------
-// server.stateHandler.register(name, schema);
-
-    // register schemas and init shared states
-
 const schemaA = {
   bool: {
     type: 'boolean',

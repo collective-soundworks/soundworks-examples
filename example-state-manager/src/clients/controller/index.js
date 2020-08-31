@@ -9,10 +9,6 @@ const config = window.soundworksConfig;
 // store experiences of emulated clients
 const experiences = new Set();
 
-// -------------------------------------------------------------------
-// register services
-// -------------------------------------------------------------------
-
 async function launch($container, index) {
   try {
     const client = new Client();

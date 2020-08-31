@@ -1,28 +1,26 @@
-# `soundworks-template`
+# `stateManager` example application
 
-> Project template for developing [*soundworks*](https://github.com/collective-soundworks/soundworks/) applications.  
+> This example shows how to use the `soundworks/core` SharedStateManager to remotely monitor and control a set of clients.
 
-_For a complete documentation of *soundworks*, please refer to [http://collective-soundworks.github.io/soundworks/](http://collective-soundworks.github.io/soundworks/)_
+## Links
 
-## Creating a new application
+- Tutorial: [https://collective-soundworks.github.io/tutorials/state-manager.html](https://collective-soundworks.github.io/tutorials/state-manager.html)
+- SharedStateManagerServer API: [http://collective-soundworks.github.io/soundworks/server.SharedStateManagerServer.html]
+- SharedStateManagerClient API: [http://collective-soundworks.github.io/soundworks/server.SharedStateManagerClient.html]
+- SharedState API: [http://collective-soundworks.github.io/soundworks/common.SharedState.html](http://collective-soundworks.github.io/soundworks/common.SharedState.html)
+
+## Launching the application
 
 ```sh
-git clone https://github.com/collective-soundworks/soundworks-template.git my-application
-cd my-application
-rm -Rf .git
+git clone https://github.com/collective-soundworks/soundworks-examples.git
+cd example-state-manager
 npm install
-# to start development
-npm run watch
+npm run dev
 ```
 
-## @todos
+## @todo
 
-- update run scripts (see `https://github.com/mysticatea/npm-run-all`)
-
-## problems with iOS
-
-v9.3.5  --> `EventTarget is not defined` probably a problem with custom elements
-v12.1.3 --> ok
+Separate what relates to tests from what relates to the example.
 
 ## License
 
