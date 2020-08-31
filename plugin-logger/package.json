@@ -22,7 +22,9 @@
   },
   "dependencies": {
     "@ircam/simple-components": "^1.0.1",
-    "@soundworks/core": "^3.0.0-alpha.9",
+    "@soundworks/core": "^3.0.0",
+    "@soundworks/plugin-logger": "^1.0.0",
+    "@soundworks/template-helpers": "^1.0.1",
     "@webcomponents/webcomponentsjs": "^2.4.3",
     "core-js": "^3.6.5",
     "json5": "^2.1.0",
@@ -33,6 +35,6 @@
     "template-literal": "^1.0.3"
   },
   "devDependencies": {
-    "@soundworks/template-build": "^3.0.0-alpha.4"
+    "@soundworks/template-build": "^3.0.1"
   }
 }

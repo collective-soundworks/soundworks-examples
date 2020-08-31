@@ -48,7 +48,7 @@ class PlayerExperience extends AbstractExperience {
 
     this.rafId = window.requestAnimationFrame(() => {
       render(html`
-        <h1 style="padding: 20px; margin: 0">${this.client.type} [id: ${this.client.id}]</h1>
+        <h1 style="padding: 20px; margin: 0">@soundworks/plugin-platform [id: ${this.client.id}]</h1>
         <sc-signal style="margin: 20px;" id="plot"></sc-signal>
       `, this.$container);
     });
