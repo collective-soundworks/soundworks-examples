@@ -30,6 +30,10 @@ console.log(`
 // -------------------------------------------------------------------
 // register plugins
 // -------------------------------------------------------------------
+// for testing default options values
+// server.pluginManager.register('checkin-default', pluginCheckinFactory, {}, []);
+// server.pluginManager.get('checkin-default');
+
 server.pluginManager.register('checkin', pluginCheckinFactory, {
   // order in which the tickets are assigned
   // defaults to 'ascending'
