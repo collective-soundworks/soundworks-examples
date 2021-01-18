@@ -4,13 +4,13 @@ function circles1(ctx, width, height) {
   for (let i = 0; i < 5000; i++) {
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
-    const b = 200; // Math.floor(Math.random() * 256);
+    const b = 200; //Math.floor(Math.random() * 256);
     const color = `rgb(${r}, ${g}, ${b})`;
     const opacity = Math.random() / 3;
 
     const x = Math.random() * width;
     const y = Math.random() * height;
-    const radius = 2 + Math.random() * 12;
+    const radius = 2 + Math.random() * 200;
 
     ctx.fillStyle = color;
     ctx.globalAlpha = opacity;
