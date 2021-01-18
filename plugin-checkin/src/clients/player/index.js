@@ -59,8 +59,6 @@ render(html`
       If you reload the page, you will see the ids increase while the indexes will stay the same.
     </p>
 
-
-
     <section id="clients-container" style="
       display: block;
       width: 1250px;
@@ -71,7 +69,7 @@ render(html`
 `, $container);
 
 const $clientsContainer = document.querySelector('#clients-container');
-// create 20 clients in a 4*5 matrix placement
+// create 5 clients: 4 valid and 1 invalid
 for (let x = 0; x < 5; x++) {
   const $div = document.createElement('div');
   $div.style.width = `250px`;
