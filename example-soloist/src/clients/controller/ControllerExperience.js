@@ -47,7 +47,7 @@ class ControllerExperience extends AbstractExperience {
     this.rafId = window.requestAnimationFrame(() => {
       let { xRange, yRange, rotateMap, radius, pointers } = this.state.getValues();
       const { radius: radiusInfos } = this.state.getSchema();
-      // consol.leo
+
       if (rotateMap) {
         // to rotate the map, we just need to flip the coordinate system
         // of the maps
@@ -125,7 +125,7 @@ class ControllerExperience extends AbstractExperience {
               opacity="0.2"
               background-opacity="0"
             ></sc-dot-map>
-             <!-- display map of players -->
+             <!-- pointer input -->
             <sc-dot-map
               style="
                 position: absolute;
