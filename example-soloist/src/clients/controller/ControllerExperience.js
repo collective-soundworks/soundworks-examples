@@ -30,7 +30,10 @@ class ControllerExperience extends AbstractExperience {
         const playerState = await this.client.stateManager.attach(schemaName, stateId);
 
         this.players.add(playerState);
-        playerState.onDetach(() => this.players.delete(playerState));
+        playerState.onDetach(() => { 
+          this.players.delete(playerState);
+          this.render();
+        });
 
         this.render();
       }
