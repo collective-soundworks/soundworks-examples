@@ -31,8 +31,8 @@ console.log(`
 --------------------------------------------------------
 `);
 
-const xRange = [-1, 5];
-const yRange = [-1, 4];
+const xRange = [0, 1];
+const yRange = [0, 1];
 
 // -------------------------------------------------------------------
 // register plugins
@@ -83,14 +83,13 @@ server.stateManager.registerSchema('controller', controllerSchema);
     // ------------------------------------------------------------------
     // link controller to players
     // ------------------------------------------------------------------
-    const activePlayers = new Set();
     const playerStates = new Set();
 
     function getNormalizedDistance(center, target, radius) {
       const dx = target.x - center.x;
       const dy = target.y - center.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
-      const normDistance = distance / radius;
+      const normDistance = Math.min(1, distance / radius);
 
       return normDistance;
     }
@@ -108,44 +107,27 @@ server.stateManager.registerSchema('controller', controllerSchema);
     controllerState.subscribe(updates => {
       for (let key in updates) {
         switch (key) {
-          case 'pointers': {
-            const pointers = updates[key];
-            const radius = controllerState.get('radius');
+          case 'pointers':
+            {
+              const pointers = updates[key];
+              const radius = controllerState.get('radius');
 
-            if (pointers.length === 0) {
-              playerStates.forEach(playerState => {
-                playerState.set({ distance: 1 });
-              });
+              if (pointers.length === 0) {
+                for (let playerState of playerStates) {
+                  playerState.set({ distance: 1 });
+                };
+              } else {
+                for (let playerState of playerStates) {
+                  for (let pointersPosition of pointers) {
+                    const playerPosition = playerState.get('position');
+                    const normDistance = getNormalizedDistance(pointersPosition, playerPosition, radius);
 
-              activePlayers.clear();
-            } else {
-              playerStates.forEach(playerState => {
-                // console.log(client);
-                let normDistance = +Infinity;
-                const isActive = activePlayers.has(playerState);
-
-                pointers.forEach(trigger => {
-                  const playerPosition = playerState.get('position');
-                  const normDistance = getNormalizedDistance(trigger, playerPosition, radius);
-                  const inRadius = (normDistance <= 1);
-
-                  if (isActive && !inRadius) {
-                    playerState.set({ distance: 1 });
-                    activePlayers.delete(playerState);
-                  }
-
-                  if (!isActive && inRadius) {
-                    activePlayers.add(playerState);
-                  }
-
-                  if (inRadius) {
                     playerState.set({ distance: normDistance });
-                  }
-                });
-              });
+                  };
+                };
+              }
+              break;
             }
-            break;
-          }
         }
       }
     });

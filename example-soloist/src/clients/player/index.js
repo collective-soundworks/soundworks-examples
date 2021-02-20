@@ -14,7 +14,7 @@ const config = window.soundworksConfig;
 const experiences = new Set();
 
 
-async function launch($container, position) {
+async function launch($container, position, showPositionScreen) {
   try {
     const client = new Client();
 
@@ -29,7 +29,7 @@ async function launch($container, position) {
     await client.init(config);
     initQoS(client);
 
-    const experience = new PlayerExperience(client, config, $container, position);
+    const experience = new PlayerExperience(client, config, $container, position, showPositionScreen);
     // store exprience for emulated clients
     experiences.add(experience);
 
@@ -40,7 +40,7 @@ async function launch($container, position) {
     experience.start();
 
     return Promise.resolve();
-  } catch(err) {
+  } catch (err) {
     console.error(err);
   }
 }
@@ -50,12 +50,10 @@ async function launch($container, position) {
 // -------------------------------------------------------------------
 const $container = document.querySelector('#__soundworks-container');
 
-render(html`
+render(html `
   <div style="padding: 20px;">
-    <h1>@soundworks/plugin-location</h1>
+    <h1>@soundworks/plugin-position</h1>
     <p>
-      This page instanciated 20 clients with a position defined on a 5 x 4 matrix
-      <br />
       <sc-button
         value="Open /controller"
         @input="${e => window.open('/controller', "MsgWindow", "width=1000,height=700")}"
@@ -66,28 +64,37 @@ render(html`
     <section id="clients-container" style="
       display: block;
       width: 1000px;
-      height: 800px;
+      height: 100%;
     ">
     </section>
   </div>
 `, $container);
 
 const $clientsContainer = document.querySelector('#clients-container');
-// create 20 clients in a 4*5 matrix placement
-for (let y = 0; y < 4; y++) {
-  for (let x = 0; x < 5; x++) {
+const searchParams = new URLSearchParams(window.location.search);
+
+// enable instanciation of multiple clients in the same page to facilitate
+// development and testing (be careful in production...)
+const numEmulatedClients = parseInt(searchParams.get('emulate')) || 1;
+
+if (numEmulatedClients > 1) {
+  const numCols = 5;
+  const numRows = Math.ceil(numEmulatedClients / numCols);
+
+  for (let i = 0; i < numEmulatedClients; i++) {
+    const x = (i % numCols + 1) / (numCols + 1);
+    const y = Math.floor(i / numCols + 1) / (numRows + 1);
+
     const $div = document.createElement('div');
     $div.classList.add('emulate');
     $clientsContainer.appendChild($div);
 
     // modify y to put clients on a circular line to mimic a concert hall
-    let yMod = x / 4 * 2 - 1;
-    yMod = yMod ** 2;
-    yMod = (1 - yMod) * 2 - 1;
-    yMod = yMod * 0.3;
-
-    const position = { x, y: y + yMod };
-    launch($div, position);
+    const yMod = ((2 * x - 1) ** 2) / (numRows + 1);
+    const position = { x, y: y - yMod };
+    launch($div, position, false);
   }
+} else {
+  const position = { x: 0.1 + 0.8 * Math.random(), y: 0.1 + 0.8 * Math.random() };
+  launch($container, position, true);
 }
-

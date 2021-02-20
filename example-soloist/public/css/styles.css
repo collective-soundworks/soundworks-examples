@@ -54,3 +54,14 @@ body.loading {
   text-align: center;
   font-size: 4rem;
 }
+
+.player-id {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  margin-top: -12pt;
+  text-align: center;
+  font-size: 12pt;
+  line-height: 24pt;
+  opacity: 0.5;
+}

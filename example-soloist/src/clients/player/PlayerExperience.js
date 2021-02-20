@@ -4,7 +4,7 @@ import renderInitializationScreens from '@soundworks/template-helpers/client/ren
 import '@ircam/simple-components/sc-dot-map.js';
 
 class PlayerExperience extends AbstractExperience {
-  constructor(client, config = {}, $container, position) {
+  constructor(client, config = {}, $container, position, showPositionScreen) {
     super(client);
 
     this.config = config;
@@ -12,8 +12,11 @@ class PlayerExperience extends AbstractExperience {
     this.rafId = null;
 
     this.position = this.require('position');
-    this.position.setPosition(position.x, position.y);
-    // renderInitializationScreens(client, config, $container);
+
+    if (showPositionScreen)
+       renderInitializationScreens(client, config, $container);
+     else 
+       this.position.setPosition(position.x, position.y);
   }
 
   async start() {
@@ -31,6 +34,8 @@ class PlayerExperience extends AbstractExperience {
 
   render() {
     // debounce with requestAnimationFrame
+    const rect = this.$container.getBoundingClientRect();
+
     window.cancelAnimationFrame(this.rafId);
 
     this.rafId = window.requestAnimationFrame(() => {
@@ -38,8 +43,8 @@ class PlayerExperience extends AbstractExperience {
         <sc-dot-map
           x-range="${JSON.stringify(this.position.options.xRange)}"
           y-range="${JSON.stringify(this.position.options.yRange)}"
-          width="200"
-          height="200"
+          width="${rect.width}"
+          height="${rect.height}"
           value="[${JSON.stringify(this.position.getPosition())}]"
           color="#ffffff"
           style="outline: 1px solid #aaaaaa;"
@@ -49,25 +54,13 @@ class PlayerExperience extends AbstractExperience {
             position: absolute;
             top: 0;
             left: 0;
-            width: 200px;
-            height: 200px;
-            line-height: 200px;
-            text-align: center;
-            font-size: 18px;
-            opacity: 0.5;
-          "
-        >[client.id: ${this.client.id}]</div>
-        <div
-          style="
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200px;
-            height: 200px;
+            width: 100%;
+            height: 100%;
             background-color: #ffffff;
             opacity: ${1 - this.state.get('distance')};
           "
-        >[client.id: ${this.client.id}]</div>
+        ></div>
+        <div class="player-id">[id: ${this.client.id}]</div>
       `, this.$container);
     });
   }

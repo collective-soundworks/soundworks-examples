@@ -10,8 +10,8 @@ export default {
   radius: {
     type: 'float',
     min: 0,
-    max: 4,
-    default: 2,
+    max: 0.5,
+    default: 0.25,
   },
   rotateMap: {
     type: 'boolean',
