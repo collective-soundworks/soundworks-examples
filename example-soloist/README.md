@@ -52,7 +52,7 @@ controllerState.subscribe(updates => {
             pointers.forEach(trigger => {
               const playerPosition = playerState.get('position');
               const normDistance = getNormalizedDistance(trigger, playerPosition, radius);
-              const inRadius = (normDistance <= 1);
+              const inRadius = (normDistance < 1);
 
               if (isActive && !inRadius) {
                 playerState.set({ distance: 1 });
