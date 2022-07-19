@@ -24,8 +24,15 @@ async function launch($container, index) {
         '88-fingers-short.mp3': 'sounds/88-fingers-short.mp3',
         'drops-short.mp3': 'sounds/drops-short.mp3',
         'plane-short.mp3': 'sounds/plane-short.mp3',
+        // 'piano.ogg': 'sounds/piano.ogg',
         'infos': 'sounds/infos.json',
-      }
+      },
+      // by default, supported exntesions are very restrictive to support all
+      // browsers, i.e. /\.(wav|mp3|json)$/i
+      // be aware that some browsers might not support some format, e.g. safari
+      // does ont support oog files.
+      // uncomment the line below and the ogg file to test.
+      // supportedExtensionRegExp: /\.(wav|mp3|ogg|json)$/i,
     }, []);
 
     // -------------------------------------------------------------------
