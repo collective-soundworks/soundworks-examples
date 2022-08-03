@@ -1,26 +1,10 @@
 import { AbstractExperience } from '@soundworks/core/client';
-import { render, html } from 'lit-html';
+import { render, html } from 'lit';
 import renderInitializationScreens from '@soundworks/template-helpers/client/render-initialization-screens.js';
 import '@ircam/simple-components/sc-text';
+import '@ircam/simple-components/sc-button';
+import '@ircam/simple-components/sc-dragndrop';
 
-function renderNode(node) {
-  if (node.type === 'file') {
-    return html`
-      <li>
-        <a href="${node.url}" target="_blank">${node.name}</a>
-      </li>
-    `;
-  } else {
-    return html`
-      <li>
-        ${node.name}/
-        <ul>
-          ${node.children.map(node => renderNode(node))}
-        </ul>
-      </li>
-    `
-  }
-}
 
 
 class PlayerExperience extends AbstractExperience {
@@ -46,6 +30,38 @@ class PlayerExperience extends AbstractExperience {
     this.render();
   }
 
+  uploadArray(arrayFiles) {
+    const files = {};
+    arrayFiles.forEach(file => files[file.name] = file);
+    if (this.uploadDir) {
+      this.filesystem.upload(this.uploadDir, files)
+    } else {
+      this.filesystem.upload(files);
+    }
+  }
+
+  renderNode(node, root) {
+    if (node.type === 'file') {
+      return html`
+      <li>
+        <a href="${node.url}" target="_blank">${node.name}</a>
+        <button
+          @click="${e => this.filesystem.delete(root, node.name)}"
+        >delete</button>
+      </li>
+    `;
+    } else {
+      return html`
+      <li>
+        ${node.name}/
+        <ul>
+          ${node.children.map(node => this.renderNode(node, root))}
+        </ul>
+      </li>
+    `
+    }
+  }
+
   render() {
     // debounce with requestAnimationFrame
     window.cancelAnimationFrame(this.rafId);
@@ -69,12 +85,34 @@ class PlayerExperience extends AbstractExperience {
               <div style="margin: 30px 0;">
                 <p>filesystem - name: "${key}", path: "${tree.path}"</p>
                 <ul>
-                  ${renderNode(tree)}
+                  ${this.renderNode(tree, key)}
                 </ul>
               </div>
             `;
           })}
           </div>
+
+          <select 
+            style="
+              display: block;
+              margin-left: 30px
+            "
+            @change="${e => this.uploadDir = e.target.value}"
+          >
+            <option value="">select upload destination</option>
+            ${Object.keys(trees).map(key => {
+              return html`
+                <option value="${key}">${key}</option>
+              `
+            })}
+          </select>
+          <sc-dragndrop
+            style="margin: 30px"
+            format="raw"
+            label="drop a file to upload it"
+            @change="${e => this.uploadArray(e.detail.value)}"
+          >
+          </sc-dragndrop>
         </div>
       `, this.$container);
     });

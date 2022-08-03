@@ -91,7 +91,7 @@ server.pluginManager.register('filesystem', pluginFilesystemFactory, {
     const playerExperience = new PlayerExperience(server, 'player');
 
     // start all the things
-    await server.start();
+    await server.start(); 
     playerExperience.start();
 
   } catch (err) {
