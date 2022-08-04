@@ -21,7 +21,7 @@
     "url": "https://github.com/collective-soundworks/soundworks-plugin-filesystem"
   },
   "dependencies": {
-    "@ircam/simple-components": "^2.2.0",
+    "@ircam/simple-components": "^2.2.1",
     "@soundworks/core": "^3.0.0",
     "@soundworks/plugin-filesystem": "^1.2.0",
     "@soundworks/template-helpers": "^2.0.0",

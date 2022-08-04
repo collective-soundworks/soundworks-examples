@@ -30,9 +30,7 @@ class PlayerExperience extends AbstractExperience {
     this.render();
   }
 
-  uploadArray(arrayFiles) {
-    const files = {};
-    arrayFiles.forEach(file => files[file.name] = file);
+  upload(files) {
     if (this.uploadDir) {
       this.filesystem.upload(this.uploadDir, files)
     } else {
@@ -40,7 +38,7 @@ class PlayerExperience extends AbstractExperience {
     }
   }
 
-  renderNode(node, root) {
+  renderTree(node, root) {
     if (node.type === 'file') {
       return html`
       <li>
@@ -55,7 +53,7 @@ class PlayerExperience extends AbstractExperience {
       <li>
         ${node.name}/
         <ul>
-          ${node.children.map(node => this.renderNode(node, root))}
+          ${node.children.map(node => this.renderTree(node, root))}
         </ul>
       </li>
     `
@@ -85,7 +83,7 @@ class PlayerExperience extends AbstractExperience {
               <div style="margin: 30px 0;">
                 <p>filesystem - name: "${key}", path: "${tree.path}"</p>
                 <ul>
-                  ${this.renderNode(tree, key)}
+                  ${this.renderTree(tree, key)}
                 </ul>
               </div>
             `;
@@ -110,7 +108,7 @@ class PlayerExperience extends AbstractExperience {
             style="margin: 30px"
             format="raw"
             label="drop a file to upload it"
-            @change="${e => this.uploadArray(e.detail.value)}"
+            @change="${e => this.upload(e.detail.value)}"
           >
           </sc-dragndrop>
         </div>
